@@ -5,19 +5,17 @@ include('../bd/connection.php');
 $conect = connection();
 
 //Obtenemos los datos en variables con le metodo POST
-$cc = $_POST["cc"];
+$id = null;
 $name = $_POST["nombre"];
 
 
 //Validamos que las casillas esten llenas
-if ($cc == "") {
-    echo '<script language="javascript">alert("Falta la cedula");window.location.href="listar_monitores.php"</script>';
-}elseif ($name == "") {
-    echo '<script language="javascript">alert("Falta el nombre");window.location.href="listar_monitores.php"</script>';
+if ($name == "") {
+    echo '<script language="javascript">alert("Falta dato Nombre");window.location.href="listar_monitores.php"</script>';
 }else 
 {
     //Si todo se cumple Insertamos los valores obtenidos en la tabla
-    $sql = "INSERT INTO monitores VALUES ('$cc','$name')";
+    $sql = "INSERT INTO monitores VALUES ('$id','$name')";
     //Ejecutamos el Query
     $query = mysqli_query($conect , $sql);
 

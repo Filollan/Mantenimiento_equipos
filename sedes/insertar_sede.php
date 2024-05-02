@@ -1,29 +1,44 @@
 <?php
-//Incluimos el archivo connection
+// Incluimos el archivo connection
 include('../bd/connection.php');
 
 $conect = connection();
 
-//Obtenemos los datos en variables con le metodo POST
-$id = null;
-$name = $_POST["nombre"];
+// Verificamos si se ha enviado el formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Obtenemos el nombre de la sede del formulario
+    $name = $_POST["nombre"];
 
+    // Verificamos si el nombre de la sede está vacío
+    if (empty($name)) {
+        echo '<script language="javascript">alert("Falta ingresar el nombre de la sede");window.location.href="listar_sedes.php"</script>';
+    } else {
+        // Consultamos si la sede ya existe en la base de datos
+        $sql_check = "SELECT * FROM sedes WHERE nombre = '$name'";
+        $query_check = mysqli_query($conect, $sql_check);
 
-//Validamos que las casillas esten llenas
-if ($name == "") {
-    echo '<script language="javascript">alert("Falta dato Nombre");window.location.href="listar_sedes.php"</script>';
-}else 
-{
-    //Si todo se cumple Insertamos los valores obtenidos en la tabla
-    $sql = "INSERT INTO sedes VALUES ('$id','$name')";
-    //Ejecutamos el Query
-    $query = mysqli_query($conect , $sql);
+        // Verificamos si la consulta fue exitosa
+        if ($query_check) {
+            // Verificamos si ya existe una sede con ese nombre
+            if (mysqli_num_rows($query_check) > 0) {
+                echo '<script language="javascript">alert("La sede ya existe en la base de datos");window.location.href="listar_sedes.php"</script>';
+            } else {
+                // Insertamos la nueva sede en la base de datos
+                $sql_insert = "INSERT INTO sedes (nombre) VALUES ('$name')";
+                $query_insert = mysqli_query($conect, $sql_insert);
 
-    //Header, una vez se inserten los datos, redirecciona al usuario al index o a recargar archivo  
-    if ($query) {
-    //Header("Location: index.php");
-    echo '<script language="javascript">alert("Sede agregada con Exito");window.location.href="listar_sedes.php"</script>';
-}
-
+                // Verificamos si la inserción fue exitosa
+                if ($query_insert) {
+                    echo '<script language="javascript">alert("Sede agregada con éxito");window.location.href="listar_sedes.php"</script>';
+                } else {
+                    echo "Error al insertar la sede: " . mysqli_error($conect);
+                }
+            }
+        } else {
+            echo "Error al verificar la existencia de la sede: " . mysqli_error($conect);
+        }
+    }
+} else {
+    echo "Acceso denegado";
 }
 ?>

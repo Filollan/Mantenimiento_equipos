@@ -1,50 +1,123 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 17-04-2024 a las 04:33:18
+-- Versión del servidor: 10.1.38-MariaDB
+-- Versión de PHP: 8.2.4
 
--- Crear tabla sedes
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `mantenimientos`
+--
+
+-- Estructura de tabla para la tabla `sedes`
+
 CREATE TABLE sedes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     nombre VARCHAR(255) NOT NULL
 );
 
--- Crear tabla salas con clave foránea a sedes
+-- --------------------------------------------------------
+
+-- Estructura de tabla para la tabla `salas`
+
 CREATE TABLE salas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     nombre VARCHAR(255) NOT NULL,
-    id_sedes INT,
+    id_sedes INT NOT NULL,
     FOREIGN KEY (id_sedes) REFERENCES sedes(id)
 );
 
--- Crear tabla marcas
+-- --------------------------------------------------------
+
+-- Estructura de tabla para la tabla `marcas`
+
 CREATE TABLE marcas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     nombre VARCHAR(255) NOT NULL
 );
 
--- Crear tabla equipos con claves foráneas a marcas y salas
+-- --------------------------------------------------------
+
+
+-- Estructura de tabla para la tabla `equipos`
+
 CREATE TABLE equipos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_equipo INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     tipo VARCHAR(255) NOT NULL,
-    id_marca INT,
-    id_sala INT,
+    codigo varchar(100) NOT NULL,
+    id_marca INT NOT NULL,
+    id_sala INT NOT NULL,
+    fechaingreso DATE NOT NULL,
+    estado int(11) NOT NULL DEFAULT '1',
     FOREIGN KEY (id_marca) REFERENCES marcas(id),
     FOREIGN KEY (id_sala) REFERENCES salas(id)
 );
 
--- Crear tabla monitores
+-- --------------------------------------------------------
+
+-- Estructura de tabla para la tabla `monitores`
+
 CREATE TABLE monitores (
-    cc INT PRIMARY KEY,
+    id INT  AUTO_INCREMENT PRIMARY KEY NOT NULL,
     nombre VARCHAR(255) NOT NULL
 );
 
--- Crear tabla mantenimientos con claves foráneas a equipos y monitores
+-- --------------------------------------------------------
+
+-- Estructura de tabla para la tabla `mantenimientos`
+
 CREATE TABLE mantenimientos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_mantenimiento INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     tipo_mantenimiento VARCHAR(255) NOT NULL,
     problema VARCHAR(255) NOT NULL,
-    descripcion TEXT,
-    fecha DATE,
-    id_equipo INT,
-    quien_cc INT,
+    descripcion TEXT NOT NULL,
+    fechainicio DATE NOT NULL,
+    fechafin DATE NOT NULL,
+    id_equipo INT NOT NULL,
+    quien_cc INT NOT NULL,
     FOREIGN KEY (id_equipo) REFERENCES equipos(id),
-    FOREIGN KEY (quien_cc) REFERENCES monitores(cc)
+    FOREIGN KEY (quien_cc) REFERENCES monitores(id)
 );
 
+
+-- Insertar datos en la tabla `sedes`
+INSERT INTO sedes (nombre) VALUES ('Sede A'), ('Sede B'), ('Sede C');
+
+-- Insertar datos en la tabla `salas`
+INSERT INTO salas (nombre, id_sedes) VALUES
+('Sala 101', 1),
+('Sala 102', 1),
+('Sala 201', 2),
+('Sala 202', 2),
+('Sala 301', 3),
+('Sala 302', 3);
+
+-- Insertar datos en la tabla `marcas`
+INSERT INTO marcas (nombre) VALUES ('Marca X'), ('Marca Y'), ('Marca Z');
+
+-- Insertar datos en la tabla `equipos`
+INSERT INTO equipos (tipo, codigo, id_marca, id_sala, fechaingreso, estado) VALUES
+('Portátil', 'EQ001', 1, 1, '2024-04-17', 1),
+('PC', 'EQ002', 2, 2, '2024-04-17', 1),
+('Portátil', 'EQ003', 3, 3, '2024-04-17', 1);
+
+-- Insertar datos en la tabla `monitores`
+INSERT INTO monitores (nombre) VALUES ('Juan Pérez'), ('María López'), ('Carlos Martínez');
+
+-- Insertar datos en la tabla `mantenimientos`
+INSERT INTO mantenimientos (tipo_mantenimiento, problema, descripcion, fechainicio, fechafin, id_equipo, quien_cc) VALUES
+('Preventivo', 'Pantalla rota', 'Se reemplazó la pantalla del equipo.', '2024-04-01', '2024-04-02', 1, 1),
+('Correctivo', 'Problemas de rendimiento', 'Se actualizó el software del equipo.', '2024-04-05', '2024-04-06', 2, 2),
+('Preventivo', 'Sobrecalentamiento', 'Se limpiaron los ventiladores del equipo.', '2024-04-10', '2024-04-11', 3, 3);

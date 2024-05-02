@@ -4,6 +4,12 @@ include('../bd/connection.php');
 
 $conect = connection();
 
+// Definimos el ID del equipo desde la URL
+$id_equipo = isset($_GET['id_equipo']) ? $_GET['id_equipo'] : null;
+
+
+// Si no se proporciona un ID de equipo, redirigir a otra página o mostrar un mensaje de error
+
 // Definimos un Query SQL para obtener los equipos disponibles
 $sql_equipos = "SELECT id, codigo FROM equipos";
 $query_equipos = mysqli_query($conect, $sql_equipos);
@@ -22,7 +28,9 @@ mantenimientos
 LEFT JOIN
 monitores ON mantenimientos.quien_cc = monitores.id
 LEFT JOIN
-equipos ON mantenimientos.id_equipo = equipos.id";
+equipos ON mantenimientos.id_equipo = equipos.id
+WHERE
+mantenimientos.id_equipo = '$id_equipo'";
 $query_mantenimientos = mysqli_query($conect, $sql_mantenimientos);
 ?>
 
@@ -32,8 +40,6 @@ $query_mantenimientos = mysqli_query($conect, $sql_mantenimientos);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="../style/style.css">
     <title>Gestionar Mantenimientos</title>
@@ -41,7 +47,8 @@ $query_mantenimientos = mysqli_query($conect, $sql_mantenimientos);
 
 <body class="container">
 <?php include('../nav.php'); ?>
-<div class="tabla-form">
+  
+    <div class="tabla-form">
         <h2>Mantenimientos Registrados</h2>
 
         <table>
@@ -67,15 +74,10 @@ $query_mantenimientos = mysqli_query($conect, $sql_mantenimientos);
                         <th><?= $row_mantenimiento['tipo_mantenimiento'] ?></th>
                         <th><?= $row_mantenimiento['nombre_monitor'] ?></th>
                         <th><?= $row_mantenimiento['fechafin'] ?></td>
+                        
 
-                        <td><a href="eliminar_mantenimientos.php?id=<?= $row_mantenimiento['id'] ?>" class="btn btn-danger btn-sm">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </td>
-                        <th><a href="editar_mantenimientos.php?id=<?= $row_mantenimiento['id'] ?>" class="btn btn-primary btn-sm">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                            </td>
+                        <td><a href="eliminar_mantenimientos.php?id=<?= $row_mantenimiento['id'] ?>" class="users-table--edit">Borrar</a></td>
+                        <th><a href="editar_mantenimientos.php?id=<?= $row_mantenimiento['id'] ?>" class="users-table--edit">Editar</a></th>
                     </tr>
                 <?php endwhile; ?>
             </tbody>
@@ -85,15 +87,23 @@ $query_mantenimientos = mysqli_query($conect, $sql_mantenimientos);
     </div>
     <div class="users-form">
         <form action="insertar_mantenimientos.php" method="POST">
-            <h1> Ingresar Mantenimiento nuevo</h1>
+            <h1> Ingresar Mantenimiento</h1>
 
-            <label for="id_equipo" class="title">Seleccionar Equipo:</label>
-            <select name="id_equipo">
-                <option value="">Seleccione un equipo</option>
-                <?php while ($row_equipo = mysqli_fetch_array($query_equipos)): ?>
-                    <option value="<?= $row_equipo['id'] ?>"><?= $row_equipo['codigo'] ?></option>
-                <?php endwhile; ?>
-            </select>
+            <input type="hidden" name="id_equipo"  value="<?= $id_equipo ?>">
+
+
+            <label for="id_equipo" class="title">Código del Equipo:</label>
+<select name="id_equipo" disabled>
+    <?php 
+    // Obtener el código del equipo correspondiente al ID proporcionado en la URL
+    $sql_codigo_equipo = "SELECT codigo FROM equipos WHERE id = $id_equipo";
+    $query_codigo_equipo = mysqli_query($conect, $sql_codigo_equipo);
+    $row_codigo_equipo = mysqli_fetch_assoc($query_codigo_equipo);
+    $codigo_equipo = $row_codigo_equipo['codigo'];
+    ?>
+    <option value="<?= $id_equipo ?>"><?= $codigo_equipo ?></option>
+</select>
+
 
             <!-- Selección del tipo de mantenimiento -->
             <label for="tipo_mantenimiento" class="title"> Tipo de Mantenimiento:</label>
@@ -119,13 +129,13 @@ $query_mantenimientos = mysqli_query($conect, $sql_mantenimientos);
                 <?php endwhile; ?>
             </select>
 
+       
+
             <!-- Botón para agregar mantenimiento -->
             <input type="submit" value="Agregar Mantenimiento">
         </form>
     </div>
 
-   
-    <br />
 </body>
 
 </html>

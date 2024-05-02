@@ -1,58 +1,17 @@
 .container {
-  width: 100vw; /* Anchura del viewport */
-  height: 100vh; /* Altura del viewport */
- 
-  background: radial-gradient(
-        circle farthest-side at 0% 50%,
-        #282828 23.5%,
-        rgba(255, 170, 0, 0) 0
-      )
-      21px 30px,
-    radial-gradient(
-        circle farthest-side at 0% 50%,
-        #2c3539 24%,
-        rgba(240, 166, 17, 0) 0
-      )
-      19px 30px,
-    linear-gradient(
-        #282828 14%,
-        rgba(240, 166, 17, 0) 0,
-        rgba(240, 166, 17, 0) 85%,
-        #282828 0
-      )
-      0 0,
-    linear-gradient(
-        150deg,
-        #282828 24%,
-        #2c3539 0,
-        #2c3539 26%,
-        rgba(240, 166, 17, 0) 0,
-        rgba(240, 166, 17, 0) 74%,
-        #2c3539 0,
-        #2c3539 76%,
-        #282828 0
-      )
-      0 0,
-    linear-gradient(
-        30deg,
-        #282828 24%,
-        #2c3539 0,
-        #2c3539 26%,
-        rgba(240, 166, 17, 0) 0,
-        rgba(240, 166, 17, 0) 74%,
-        #2c3539 0,
-        #2c3539 76%,
-        #282828 0
-      )
-      0 0,
-    linear-gradient(90deg, #2c3539 2%, #282828 0, #282828 98%, #2c3539 0%) 0 0
-      #282828;
-  background-size: 40px 60px;
+  width: 100%;
+  height: 100%;
+  max-width: auto;
+  --color: rgba(114, 114, 114, 0.3);
+  background-color: #191a1a;
+  background-image: linear-gradient(0deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%,transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%,transparent),
+      linear-gradient(90deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%,transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%,transparent);
+  background-size: 55px 55px;
 }
+
 
 .title {
   color: white; /* Cambia el color del título a blanco */
-
 }
 label#title {
     text-align: right;
@@ -119,7 +78,8 @@ label#title {
 table th {
 color: white; /* Cambia el color del texto a blanco */
 font-family: 'Segoe UI', sans-serif; /* Aplica una fuente bonita */
-font-weight: bold; /* Hace que el texto sea más audaz */}
+font-weight: bold; /* Hace que el texto sea más audaz */
+}
 
 table th {
     padding: 16px;
@@ -127,13 +87,14 @@ table th {
     font-size: .85em;
 }
 
+
 .users-table--edit{
 
     background: #009688;
     padding: 6px;
     color: #fff;
     text-align: center;
-    font-weight: bold;
+    
     
 }
 
@@ -149,7 +110,7 @@ table th {
   font-weight: bold;
   background-color: var(--btn-color);
   border-radius: 1em;
-  outline: none;
+
   box-shadow: 0 0 1em 0.25em var(--glow-color),
     0 0 4em 1em var(--glow-spread-color),
     inset 0 0 0.75em 0.25em var(--glow-color);
@@ -192,8 +153,124 @@ table th {
     flex-direction: column;
     gap: 22px;
     width: 60%;
-    margin: 20px auto;
+   
 
   }
   
+.h2{
+ color-scheme: #ccc;
+}
+.bg-transparent-dark {
+  background-color: rgba(0, 0, 0, 0.5); /* Ajusta el último valor (0.5) para cambiar la opacidad */
+}
+
+.login-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  padding: 40px;
+  transform: translate(-50%, -50%);
+  background: rgba(24, 20, 20, 0.987);
+  box-sizing: border-box;
+  box-shadow: 0 15px 25px rgba(0,0,0,.6);
+  border-radius: 10px;
+}
+
+.login-box .user-box {
+  position: relative;
+}
+
+.login-box .user-box input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+}
+
+.login-box .user-box label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  pointer-events: none;
+  transition: .5s;
+}
+
+.login-box .user-box input:focus ~ label,
+.login-box .user-box input:valid ~ label {
+  top: -20px;
+  left: 0;
+  color: #bdb8b8;
+  font-size: 12px;
+}
+
+.login-box form a {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  color: #ffffff;
+  font-size: 16px;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: .5s;
+  margin-top: 40px;
+  letter-spacing: 4px
+}
+
+.login-box a:hover {
+  background: #03f40f;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #03f40f,
+              0 0 25px #03f40f,
+              0 0 50px #03f40f,
+              0 0 100px #03f40f;
+}
+
+.login-box a span {
+  position: absolute;
+  display: block;
+}
+
+@keyframes btn-anim1 {
+  0% {
+    left: -100%;
+  }
+
+  50%,100% {
+    left: 100%;
+  }
+}
+
+.login-box a span:nth-child(1) {
+  bottom: 2px;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #03f40f);
+  animation: btn-anim1 2s linear infinite;
+}
+
+.icon-text {
+  
+  margin-right: 5px /* Ajusta este valor según el espacio que desees entre el ícono y el texto */
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
 

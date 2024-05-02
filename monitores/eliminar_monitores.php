@@ -4,9 +4,9 @@ include('../bd/connection.php');
 
 $conect = connection();
 
-$cc=$_GET['cc'];
+$id=$_GET['id'];
 
-$sql = "DELETE FROM monitores WHERE cc='$cc'";
+$sql = "DELETE FROM monitores WHERE id='$id'";
 //Ejecutamos el Query
 $query = mysqli_query($conect , $sql);
 
