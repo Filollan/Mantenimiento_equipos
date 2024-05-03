@@ -18,7 +18,7 @@ $sql_equipos =
     equipos.id, 
     equipos.codigo, 
     equipos.tipo, 
-    equipos.id_marca AS idMarca, 
+    marcas.nombre AS nombre_marca, 
     salas.nombre AS nombre_sala, 
     sedes.nombre AS nombre_sede, 
     equipos.fechaingreso AS fecha_ingreso, 
@@ -36,6 +36,8 @@ LEFT JOIN
     sedes ON salas.id_sedes = sedes.id 
 LEFT JOIN 
     mantenimientos ON equipos.id = mantenimientos.id_equipo
+LEFT JOIN
+    marcas ON equipos.id_marca = marcas.id
 GROUP BY
     equipos.id;";
 
@@ -87,7 +89,7 @@ $query_equipos = mysqli_query($conect, $sql_equipos);
                         <tr>
                             <th><?= $row_equipo['codigo'] ?></th>
                             <th><?= $row_equipo['tipo'] ?></th>
-                            <th><?= $row_equipo['idMarca'] ?></th>
+                            <th><?= $row_equipo['nombre_marca'] ?></th>
                             <th><?= $row_equipo['nombre_sala'] ?></th>
                             <th><?= $row_equipo['nombre_sede'] ?></th>
                             <th><?= $row_equipo['fecha_ingreso'] ?></th>
@@ -105,10 +107,10 @@ $query_equipos = mysqli_query($conect, $sql_equipos);
                                 </a>
                             </th>
 
-
-
                             <th>
-                                <a href="listar_mantenimientos.php?id_equipo=<?= $row_equipo['id'] ?>" class="users-table--edit">mantenimientos</a>
+                                <a href="listar_mantenimientos.php?id_equipo=<?= $row_equipo['id'] ?>" class="btn btn-info btn-sm">
+                                    <i class="fas fa-eye"></i> Mantenimientos
+                                </a>
                             </th>
                         </tr>
                 <?php

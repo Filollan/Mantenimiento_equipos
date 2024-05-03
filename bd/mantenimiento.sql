@@ -93,7 +93,7 @@ CREATE TABLE mantenimientos (
 
 
 -- Insertar datos en la tabla `sedes`
-INSERT INTO sedes (nombre) VALUES ('Sede A'), ('Sede B'), ('Sede C');
+INSERT INTO sedes (nombre) VALUES ('Sede Obando'), ('Sede Encarnacion'), ('Sede Bicentenerio');
 
 -- Insertar datos en la tabla `salas`
 INSERT INTO salas (nombre, id_sedes) VALUES
@@ -103,21 +103,3 @@ INSERT INTO salas (nombre, id_sedes) VALUES
 ('Sala 202', 2),
 ('Sala 301', 3),
 ('Sala 302', 3);
-
--- Insertar datos en la tabla `marcas`
-INSERT INTO marcas (nombre) VALUES ('Marca X'), ('Marca Y'), ('Marca Z');
-
--- Insertar datos en la tabla `equipos`
-INSERT INTO equipos (tipo, codigo, id_marca, id_sala, fechaingreso, estado) VALUES
-('Portátil', 'EQ001', 1, 1, '2024-04-17', 1),
-('PC', 'EQ002', 2, 2, '2024-04-17', 1),
-('Portátil', 'EQ003', 3, 3, '2024-04-17', 1);
-
--- Insertar datos en la tabla `monitores`
-INSERT INTO monitores (nombre) VALUES ('Juan Pérez'), ('María López'), ('Carlos Martínez');
-
--- Insertar datos en la tabla `mantenimientos`
-INSERT INTO mantenimientos (tipo_mantenimiento, problema, descripcion, fechainicio, fechafin, id_equipo, quien_cc) VALUES
-('Preventivo', 'Pantalla rota', 'Se reemplazó la pantalla del equipo.', '2024-04-01', '2024-04-02', 1, 1),
-('Correctivo', 'Problemas de rendimiento', 'Se actualizó el software del equipo.', '2024-04-05', '2024-04-06', 2, 2),
-('Preventivo', 'Sobrecalentamiento', 'Se limpiaron los ventiladores del equipo.', '2024-04-10', '2024-04-11', 3, 3);

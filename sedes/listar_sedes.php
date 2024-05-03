@@ -19,11 +19,7 @@ $query = mysqli_query($conect, $sql);
 
     <link rel="stylesheet" href="../style/style.css">
     <title>Gestionar sedes</title>
-    <style>
-        .users-form {
-            display: none;
-        }
-    </style>
+    
 </head>
 <body class="container">
     <?php include('../nav.php'); ?>
@@ -63,7 +59,7 @@ $query = mysqli_query($conect, $sql);
         </table>
         <br>
     </div>
-    <button id="toggleFormButton" class="users-table--edit">Ingresar sede</button>
+
 
 
     <div class="users-form">
@@ -76,14 +72,7 @@ $query = mysqli_query($conect, $sql);
         </form>
     </div>
 
-    <script>
-    const toggleFormButton = document.getElementById('toggleFormButton');
-    const usersForm = document.querySelector('.users-form');
-
-    toggleFormButton.addEventListener('click', function() {
-        usersForm.style.display = usersForm.style.display === 'none' ? 'block' : 'none';
-    });
-</script>
+  
 
 </body>
 </html>

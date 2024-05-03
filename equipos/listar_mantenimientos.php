@@ -41,6 +41,8 @@ $query_mantenimientos = mysqli_query($conect, $sql_mantenimientos);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="../style/style.css">
     <title>Gestionar Mantenimientos</title>
 </head>
@@ -76,8 +78,14 @@ $query_mantenimientos = mysqli_query($conect, $sql_mantenimientos);
                         <th><?= $row_mantenimiento['fechafin'] ?></td>
                         
 
-                        <td><a href="eliminar_mantenimientos.php?id=<?= $row_mantenimiento['id'] ?>" class="users-table--edit">Borrar</a></td>
-                        <th><a href="editar_mantenimientos.php?id=<?= $row_mantenimiento['id'] ?>" class="users-table--edit">Editar</a></th>
+                        <td><a href="eliminar_mantenimientos.php?id=<?= $row_mantenimiento['id'] ?>"  class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </td>
+                        <th><a href="editar_mantenimientos.php?id=<?= $row_mantenimiento['id'] ?>" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </td>
                     </tr>
                 <?php endwhile; ?>
             </tbody>

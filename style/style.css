@@ -272,5 +272,21 @@ table th {
   'GRAD' 0,
   'opsz' 24
 }
+/* Estilos para pantallas pequeñas */
+@media (max-width: 767px) {
+  .navbar-brand img {
+      width: 50px; /* Tamaño del logo en pantallas pequeñas */
+      height: 50px;
+  }
 
+  .navbar-nav .nav-link {
+      padding: 0.5rem; /* Espaciado entre elementos del navbar */
+  }
+}
 
+/* Estilos para pantallas medianas y grandes */
+@media (min-width: 768px) {
+  .navbar-nav .nav-link {
+      padding: 0.5rem 1rem; /* Espaciado horizontal entre elementos del navbar */
+  }
+}

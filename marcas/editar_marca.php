@@ -7,7 +7,7 @@ $conect = connection();
 // Verificamos si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Procesar los datos del formulario y actualizar la marca en la base de datos
-     $id = $_POST["id"];
+    $id = $_POST["id"];
     $name = $_POST["nombre"];
 
     // Verificamos si el nombre de la marca está vacío
@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $query_check = mysqli_query($conect, $sql_check);
 
         // Verificamos si la consulta fue exitosa
-        if ($query_check) {
+        if ($query_check !== false) {
             // Verificamos si ya existe una marca con ese nombre (excluyendo la marca que se está editando)
             if (mysqli_num_rows($query_check) > 0) {
                 echo '<script language="javascript">alert("Ya existe una marca con ese nombre");window.location.href="editar_marca.php?id='.$id.'"</script>';
@@ -40,10 +40,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
-// Obtenemos el ID de la sede a editar
+
+// Obtenemos el ID de la marca a editar
 $id = $_GET['id'];
 
-// Obtenemos los datos de la sede a editar
+// Obtenemos los datos de la marca a editar
 $sql = "SELECT * FROM marcas WHERE id=$id";
 $query = mysqli_query($conect, $sql);
 $row = mysqli_fetch_array($query);
@@ -69,4 +70,3 @@ $row = mysqli_fetch_array($query);
     </div>
 </body>
 </html>
-

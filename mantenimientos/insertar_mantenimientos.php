@@ -38,6 +38,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Verificar si la inserción fue exitosa
         if ($query_insert_mantenimiento) {
+            // Actualizar el estado del equipo a inactivo (0)
+            $sql_update_equipo = "UPDATE equipos SET estado = 0 WHERE id = ?";
+            $stmt_update_equipo = mysqli_prepare($conect, $sql_update_equipo);
+            mysqli_stmt_bind_param($stmt_update_equipo, "i", $id_equipo);
+            mysqli_stmt_execute($stmt_update_equipo);
+            mysqli_stmt_close($stmt_update_equipo);
+
             // Redireccionar a listar_mantenimientos.php con el id_equipo correspondiente
             header("Location: listar_mantenimientos.php?id_equipo=$id_equipo");
             exit(); // Asegúrate de salir después de la redirección

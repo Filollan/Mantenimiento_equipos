@@ -30,6 +30,22 @@ mysqli_stmt_bind_param($stmt, "sssssiis", $tipo_mantenimiento, $problema, $descr
 $query = mysqli_stmt_execute($stmt);
 
 if ($query) {
+    // Obtener el id del equipo asociado al mantenimiento
+    $sql_equipo_id = "SELECT id_equipo FROM mantenimientos WHERE id = ?";
+    $stmt_equipo_id = mysqli_prepare($conect, $sql_equipo_id);
+    mysqli_stmt_bind_param($stmt_equipo_id, "i", $id);
+    mysqli_stmt_execute($stmt_equipo_id);
+    mysqli_stmt_bind_result($stmt_equipo_id, $equipo_id);
+    mysqli_stmt_fetch($stmt_equipo_id);
+    mysqli_stmt_close($stmt_equipo_id);
+
+    // Actualizar el estado del equipo a activo
+    $sql_update_equipo = "UPDATE equipos SET estado = 1 WHERE id = ?";
+    $stmt_update_equipo = mysqli_prepare($conect, $sql_update_equipo);
+    mysqli_stmt_bind_param($stmt_update_equipo, "i", $equipo_id);
+    mysqli_stmt_execute($stmt_update_equipo);
+    mysqli_stmt_close($stmt_update_equipo);
+
     // Redirigimos de vuelta a la página listar_mantenimientos.php con el id del equipo
     header("Location: listar_mantenimientos.php?id_equipo=$id_equipo");
     exit(); // Asegúrate de salir después de la redirección

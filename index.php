@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style/style.css">
     <title>Mantenimiento de Equipos</title>
 </head>
-<body class="container"> 
+<body class="container" > 
 <div>
    
     <nav class="navbar navbar-expand-lg navbar-dark  mb-4">
